@@ -569,7 +569,7 @@ const styles = {
     border: "1px solid #cbd5e1",
     fontSize: "14px",
     fontFamily: "inherit",
-    background: "#f8fafc",
+    background: "#0969ca",
   },
   slotsGrid: {
     display: "grid",
@@ -633,6 +633,7 @@ const styles = {
     background: "#f8fafc",
     boxSizing: "border-box",
     resize: "vertical",
+    color: "#0f172a",
   },
   footer: {
     display: "flex",

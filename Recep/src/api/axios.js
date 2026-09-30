@@ -26,8 +26,13 @@ function irParaLogin() {
 }
 
 api.interceptors.request.use((config) => {
-  if (config.url && !config.url.endsWith("/")) {
-    config.url += "/";
+  if (config.url) {
+    const queryIndex = config.url.indexOf("?");
+    const path = queryIndex === -1 ? config.url : config.url.slice(0, queryIndex);
+    const query = queryIndex === -1 ? "" : config.url.slice(queryIndex);
+    if (!path.endsWith("/")) {
+      config.url = `${path}/${query}`;
+    }
   }
 
   config.headers["ngrok-skip-browser-warning"] = "true"; // linha nova
