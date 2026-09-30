@@ -165,7 +165,7 @@ Este projeto foi construído colaborativamente a duas mãos, unindo esforços no
 | 🧑‍💻 **Jonathan Duarte** | 🧑‍💻 **Ramon Nogueira** |
 | :--- | :--- |
 | ✉️ devjonathanduarte@gmail.com | ✉️️ [Insira o Email do Ramon aqui] |
-| 🐙 [GitHub](https://github.com/devjonathanduarte) | 🐙 [GitHub](https://github.com/UsuarioDoRamonAqui) |
-| 💼 [LinkedIn](https://www.linkedin.com/in/SEU-LINK-AQUI) | 💼 [LinkedIn](https://www.linkedin.com/in/LINK-DO-RAMON-AQUI) |
+| 🐙 [GitHub](https://github.com/Johnny-Duart) | 🐙 [GitHub](https://github.com/RamonNogueira83) |
+| 💼 [LinkedIn](https://www.linkedin.com/in/johnny-duart/) | 💼 [LinkedIn](https://www.linkedin.com/in/ramon-nogueira-98a1a6404/) |
 
 > *Trabalhar em dupla nos permitiu aplicar boas práticas de versionamento (Git/GitHub), code review e divisão eficiente de tarefas ao longo do ciclo de vida da aplicação.*
