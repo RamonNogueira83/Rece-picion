@@ -1,6 +1,6 @@
 # 🏥 Sistema Clínico Multi-Tenant & Agendamento Inteligente
 
-> Plataforma SaaS clínica multi-especialidade (Dermatologia e Odontologia), construída com isolamento lógico de dados (*multi-tenancy*), motor de agendamento online com cálculo em tempo real de horários disponíveis (*slots*), portal do paciente e painel de atendimento para profissionais e recepção.
+> Plataforma clínica multi-especialidade (Dermatologia e Odontologia), construída com isolamento lógico de dados (*multi-tenancy*), motor de agendamento online com cálculo em tempo real de horários disponíveis (*slots*), portal do paciente e painel de atendimento para profissionais e recepção.
 
 ![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-8.1-646CFF?logo=vite&logoColor=white)
