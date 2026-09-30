@@ -1,17 +1,37 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL:
-    import.meta.env.VITE_API_URL || "http://localhost:8000/api/",
+  baseURL: import.meta.env.VITE_API_URL || "/api/",
 });
 
+const refreshApi = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || "/api/",
+});
+
+let renovando = false;
+let filaEspera = [];
+
+function processarFila(erro, novoToken) {
+  filaEspera.forEach(({ resolve, reject }) => {
+    if (erro) reject(erro);
+    else resolve(novoToken);
+  });
+  filaEspera = [];
+}
+
+function irParaLogin() {
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("refresh_token");
+  window.location.href = "/login";
+}
+
 api.interceptors.request.use((config) => {
-  // garante barra no final em toda chamada
   if (config.url && !config.url.endsWith("/")) {
     config.url += "/";
   }
 
-  // anexa o token JWT, se existir (login não precisa disso, os outros endpoints precisam)
+  config.headers["ngrok-skip-browser-warning"] = "true"; // linha nova
+
   const token = localStorage.getItem("access_token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -19,5 +39,53 @@ api.interceptors.request.use((config) => {
 
   return config;
 });
+
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    const foi401 = error.response?.status === 401;
+    const jaTentouDeNovo = originalRequest._retry;
+    const eraORequestDeToken = originalRequest.url?.includes("token/");
+
+    if (!foi401 || jaTentouDeNovo || eraORequestDeToken) {
+      return Promise.reject(error);
+    }
+
+    const refreshToken = localStorage.getItem("refresh_token");
+    if (!refreshToken) {
+      irParaLogin();
+      return Promise.reject(error);
+    }
+
+    if (renovando) {
+      return new Promise((resolve, reject) => {
+        filaEspera.push({ resolve, reject });
+      }).then((novoToken) => {
+        originalRequest.headers.Authorization = `Bearer ${novoToken}`;
+        return api(originalRequest);
+      });
+    }
+
+    originalRequest._retry = true;
+    renovando = true;
+
+    try {
+      const res = await refreshApi.post("token/refresh/", { refresh: refreshToken });
+      const novoAccessToken = res.data.access;
+      localStorage.setItem("access_token", novoAccessToken);
+      processarFila(null, novoAccessToken);
+      originalRequest.headers.Authorization = `Bearer ${novoAccessToken}`;
+      return api(originalRequest);
+    } catch (erroRefresh) {
+      processarFila(erroRefresh, null);
+      irParaLogin();
+      return Promise.reject(erroRefresh);
+    } finally {
+      renovando = false;
+    }
+  }
+);
 
 export default api;

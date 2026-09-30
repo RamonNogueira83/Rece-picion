@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 from decouple import Csv, config
@@ -28,7 +29,7 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
-    default="localhost,127.0.0.1,.ngrok-free.app",
+    default="localhost,127.0.0.1,testserver,.ngrok-free.app,.ngrok-free.dev",
     cast=Csv(),
 )
 
@@ -44,10 +45,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "corsheaders",
+    "clinicas",
     "usuarios",
     "pacientes",
     "agendamentos",
-    "prontuarios",
     "financeiro",
 ]
 
@@ -85,16 +86,26 @@ WSGI_APPLICATION = "core.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("DB_NAME"),
-        "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
-        "HOST": config("DB_HOST", default="localhost"),
-        "PORT": config("DB_PORT", default="5433"),
+DB_ENGINE = config("DB_ENGINE", default="sqlite")
+
+if DB_ENGINE == "postgresql":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": config("DB_NAME", default="dermato_db"),
+            "USER": config("DB_USER", default="dermato_user"),
+            "PASSWORD": config("DB_PASSWORD", default="dermato_logista_ramon_e_jonathan"),
+            "HOST": config("DB_HOST", default="localhost"),
+            "PORT": config("DB_PORT", default="5433"),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
 # Password validation
@@ -134,7 +145,7 @@ CORS_ALLOWED_ORIGINS = config(
 )
 CORS_ALLOWED_ORIGIN_REGEXES = config(
     "CORS_ALLOWED_ORIGIN_REGEXES",
-    default=r"https://.*\.ngrok-free\.app",
+    default=r"https://.*\.ngrok-free\.(dev|app)",
     cast=Csv(),
 )
 CSRF_TRUSTED_ORIGINS = config(
@@ -158,4 +169,9 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
 }

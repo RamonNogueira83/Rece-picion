@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AgendamentoModal from "../components/AgendamentoModal";
 import {
   FaWhatsapp,
   FaArrowUp,
@@ -498,6 +499,7 @@ function Landing() {
   const navigate = useNavigate();
   const [showTop, setShowTop] = useState(false);
   const [variant, setVariant] = useState("dermatologia");
+  const [modalAgendamento, setModalAgendamento] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 320);
@@ -574,7 +576,7 @@ function Landing() {
               Odontologia
             </button>
             <button onClick={() => navigate("/login")} style={ui.secondaryButton}>Login</button>
-            <button onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} style={ui.primaryButton}>Agendar Consulta</button>
+            <button onClick={() => setModalAgendamento(true)} style={ui.primaryButton}>Agendar Consulta</button>
           </div>
         </div>
       </header>
@@ -590,7 +592,7 @@ function Landing() {
               {content.subtitle}
             </p>
             <div style={styles.heroActions}>
-              <button onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} style={ui.primaryButton}>Agendar Consulta</button>
+              <button onClick={() => setModalAgendamento(true)} style={ui.primaryButton}>Agendar Consulta</button>
               <a href="https://wa.me/5511999999999" target="_blank" rel="noreferrer" style={{ ...ui.secondaryButton, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "8px" }}>
                 <FaWhatsapp /> Fale pelo WhatsApp
               </a>
@@ -821,6 +823,12 @@ function Landing() {
           <FaArrowUp />
         </button>
       )}
+
+      <AgendamentoModal
+        isOpen={modalAgendamento}
+        onClose={() => setModalAgendamento(false)}
+        defaultClinica={variant === "dermatologia" ? "dermato" : "odonto"}
+      />
     </div>
   );
 }

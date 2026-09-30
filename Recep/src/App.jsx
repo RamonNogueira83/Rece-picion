@@ -7,6 +7,7 @@ import Agendamentos from "./pages/Agendamentos";
 import Cadastros from "./pages/Cadastros";
 import Relatorios from "./pages/Relatorios";
 import Configuracoes from "./pages/Configuracoes";
+import PortalPaciente from "./pages/PortalPaciente";
 
 function RotaProtegida({ children }) {
   const token = localStorage.getItem("access_token");
@@ -19,6 +20,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
+        <Route
+          path="/portal-paciente"
+          element={
+            <RotaProtegida>
+              <PortalPaciente />
+            </RotaProtegida>
+          }
+        />
         <Route
           path="/dashboard"
           element={

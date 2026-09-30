@@ -61,9 +61,8 @@ async function main() {
     console.log('[dev] PostgreSQL disponível.');
   }
 
-  const pythonBinary = process.platform === 'win32'
-    ? path.join(backendDir, '.venv314', 'Scripts', 'python.exe')
-    : 'python';
+  const pythonBinary =
+    path.join(backendDir, ".venv", "Scripts", "python.exe");
 
   console.log('[dev] aplicando migrations do Django...');
   const migrateCode = await run(pythonBinary, ['manage.py', 'migrate'], {
