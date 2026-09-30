@@ -164,7 +164,7 @@ Este projeto foi construído colaborativamente a duas mãos, unindo esforços no
 
 | 🧑‍💻 **Jonathan Duarte** | 🧑‍💻 **Ramon Nogueira** |
 | :--- | :--- |
-| ✉️ devjonathanduarte@gmail.com | ✉️️ [Insira o Email do Ramon aqui] |
+| ✉️ devjonathanduarte@gmail.com | ✉️️ [ramonrnassc@gmail.com] |
 | 🐙 [GitHub](https://github.com/Johnny-Duart) | 🐙 [GitHub](https://github.com/RamonNogueira83) |
 | 💼 [LinkedIn](https://www.linkedin.com/in/johnny-duart/) | 💼 [LinkedIn](https://www.linkedin.com/in/ramon-nogueira-98a1a6404/) |
 
